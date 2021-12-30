@@ -1,0 +1,30 @@
+﻿@model List<Question>
+
+@using (Html.BeginForm("Edit", "Question", FormMethod.Post))
+{
+    <table class="table table-bordered table-">
+        <thead>
+            <tr>
+                <th>Questions</th>
+                <th>Answers</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < @Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[@i].Name</td>
+                    <td>
+                        @Html.HiddenFor(q => q[@i].Id)
+                        @Html.DropDownListFor(q => @Model[@i].AnswerId, new SelectList(@Model[@i].Answers,"Id", "Name"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <input id="edit" class="btn btn-info" type="button" value="Edit questions" />
+    <input id="save" class="btn btn-danger" type="submit" value="Save changes" disabled />
+    <input id="cancel" class="btn btn-warning" type="button" value="Cancel changes" disabled />
+}
+
+<script src="/js/singleform.js"></script>

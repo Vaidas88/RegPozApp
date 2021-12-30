@@ -1,51 +1,6 @@
-﻿@model List<Question>
-@* DTO SU SELECTED ANSWERID *@
+﻿@model List<Form>
 
-@using (Html.BeginForm("Edit", "Question", FormMethod.Post))
+@foreach (var form in @Model)
 {
-    <table class="table table-bordered table-">
-        <thead>
-            <tr>
-                <th>Questions</th>
-                <th>Answers</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (var i = 0; i < @Model.Count; i++)
-            {
-                <tr>
-                    <td>@Model[@i].Name</td>
-                    <td>
-                        @Html.HiddenFor(q => q[@i].Id)
-                        @Html.DropDownListFor(q => @Model[@i].AnswerId, new SelectList(@Model[@i].Answers,"Id", "Name"))
-                    </td>
-                </tr>
-            }
-            @*@foreach (var question in @Model)
-                {
-                <tr>
-                <td>@question.Name</td>
-                <td>
-
-                <input type="hidden" name="QuestionId[]" value="@question.Id" />
-                <select name="AnswerId[]">
-                <option value=""></option>
-                @foreach (var answer in question.Answers)
-                {
-                if (answer.Current == true)
-                {
-                <option value="@answer.Id" selected>@answer.Name</option>
-                }
-                else
-                {
-                <option value="@answer.Id">@answer.Name</option>
-                }
-                }
-                </select>
-                </td>
-                </tr>
-                }*@
-        </tbody>
-    </table>
-    <input type="submit" value="Submit" />
+    @Html.ActionLink(form.Name, "SingleForm", "Question", new { id = form.Id },  new { @class= "btn btn-primary" })
 }

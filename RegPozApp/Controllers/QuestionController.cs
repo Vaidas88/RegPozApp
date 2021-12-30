@@ -8,55 +8,32 @@ namespace RegPozApp.Controllers
 {
     public class QuestionController : Controller
     {
-        private QuestionRepository _questionRepository;
+        private readonly QuestionRepository _questionRepository;
+        private readonly FormRepository _formRepository;
 
-        public QuestionController(QuestionRepository questionRepository)
+        public QuestionController(QuestionRepository questionRepository, FormRepository formRepository)
         {
             _questionRepository = questionRepository;
+            _formRepository = formRepository;
         }
-        // GET: QuestionController
-        public ActionResult Index(int id)
-        {
-            if (id == 0)
-            {
 
-            }
+        public ActionResult Index()
+        {
+            var forms = _formRepository.GetAll();
+
+            return View(forms);
+        }
+
+        public ActionResult SingleForm(int id)
+        {
             var questions = _questionRepository.GetAllByFormId(id);
 
             return View(questions);
         }
 
-        // GET: QuestionController/Details/5
-        public ActionResult SingleForm(int id)
+        public ActionResult Edit()
         {
-            return View();
-        }
-
-        // GET: QuestionController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: QuestionController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: QuestionController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
+            return View(nameof(Index));
         }
 
         // POST: QuestionController/Edit/5
@@ -79,27 +56,6 @@ namespace RegPozApp.Controllers
             _questionRepository.SaveChanges();
 
             return RedirectToAction(nameof(Index));
-        }
-
-        // GET: QuestionController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: QuestionController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }
