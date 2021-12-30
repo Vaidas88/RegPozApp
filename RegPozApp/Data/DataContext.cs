@@ -11,38 +11,57 @@ namespace RegPozApp.Data
 
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
+        public DbSet<Form> Forms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Form>().HasData(
+                new Form()
+                {
+                    Id = 1,
+                    Name = "Form #1",
+                    IsDeleted = false
+                });
+
             modelBuilder.Entity<Question>().HasData(
                 new Question()
                 {
                     Id = 1,
                     Name = "Reikia atlikti rangos darbus",
+                    AnswerId = 1,
+                    FormId = 1,
                     IsDeleted = false
                 },
                 new Question()
                 {
                     Id = 2,
                     Name = "Rangos darbus atliks",
+                    AnswerId = 3,
+                    FormId = 1,
                     IsDeleted = false
                 },
                 new Question()
                 {
                     Id = 3,
                     Name = "Verslo klientas",
+                    AnswerId = 8,
+                    FormId = 1,
                     IsDeleted = false
                 },
                 new Question()
                 {
                     Id = 4,
                     Name = "Skaičiavimo metodas",
+                    AnswerId = 9,
+                    FormId = 1,
                     IsDeleted = false
                 },
                 new Question()
                 {
                     Id = 5,
                     Name = "Svarbus klientas",
+                    AnswerId = 0,
+                    FormId = 1,
                     IsDeleted = false
                 }
             );
@@ -53,7 +72,6 @@ namespace RegPozApp.Data
                     Id = 1,
                     Name = "Taip",
                     QuestionId = 1,
-                    Current = true,
                     IsDeleted = false
                 },
                 new Answer()
@@ -61,7 +79,6 @@ namespace RegPozApp.Data
                     Id = 2,
                     Name = "Ne",
                     QuestionId = 1,
-                    Current = false,
                     IsDeleted = false
                 },
                 new Answer()
@@ -69,7 +86,6 @@ namespace RegPozApp.Data
                     Id = 3,
                     Name = "Metinis rangovas",
                     QuestionId = 2,
-                    Current = true,
                     IsDeleted = false
                 },
                 new Answer()
@@ -77,7 +93,6 @@ namespace RegPozApp.Data
                     Id = 4,
                     Name = "Metinis subrangovas",
                     QuestionId = 2,
-                    Current = false,
                     IsDeleted = false
                 },
                 new Answer()
@@ -85,7 +100,6 @@ namespace RegPozApp.Data
                     Id = 5,
                     Name = "Senas rangovas",
                     QuestionId = 2,
-                    Current = false,
                     IsDeleted = false
                 },
                 new Answer()
@@ -93,7 +107,6 @@ namespace RegPozApp.Data
                     Id = 6,
                     Name = "Naujas rangovas",
                     QuestionId = 2,
-                    Current = false,
                     IsDeleted = false
                 },
                 new Answer()
@@ -101,7 +114,6 @@ namespace RegPozApp.Data
                     Id = 7,
                     Name = "Taip",
                     QuestionId = 3,
-                    Current = false,
                     IsDeleted = false
                 },
                 new Answer()
@@ -109,7 +121,6 @@ namespace RegPozApp.Data
                     Id = 8,
                     Name = "Ne",
                     QuestionId = 3,
-                    Current = true,
                     IsDeleted = false
                 },
                 new Answer()
@@ -117,7 +128,6 @@ namespace RegPozApp.Data
                     Id = 9,
                     Name = "Automatinis",
                     QuestionId = 4,
-                    Current = true,
                     IsDeleted = false
                 },
                 new Answer()
@@ -125,7 +135,6 @@ namespace RegPozApp.Data
                     Id = 10,
                     Name = "Rankinis",
                     QuestionId = 4,
-                    Current = false,
                     IsDeleted = false
                 },
                 new Answer()
@@ -133,7 +142,6 @@ namespace RegPozApp.Data
                     Id = 11,
                     Name = "Taip",
                     QuestionId = 5,
-                    Current = false,
                     IsDeleted = false
                 },
                 new Answer()
@@ -141,7 +149,6 @@ namespace RegPozApp.Data
                     Id = 12,
                     Name = "Ne",
                     QuestionId = 5,
-                    Current = false,
                     IsDeleted = false
                 }
             );

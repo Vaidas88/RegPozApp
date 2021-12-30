@@ -10,8 +10,8 @@ using RegPozApp.Data;
 namespace RegPozApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211229162757_init")]
-    partial class init
+    [Migration("20211230175213_form-migration")]
+    partial class formmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,9 +27,6 @@ namespace RegPozApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Current")
-                        .HasColumnType("bit");
 
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
@@ -50,7 +47,6 @@ namespace RegPozApp.Migrations
                         new
                         {
                             Id = 1,
-                            Current = true,
                             IsDeleted = false,
                             Name = "Taip",
                             QuestionId = 1
@@ -58,7 +54,6 @@ namespace RegPozApp.Migrations
                         new
                         {
                             Id = 2,
-                            Current = false,
                             IsDeleted = false,
                             Name = "Ne",
                             QuestionId = 1
@@ -66,7 +61,6 @@ namespace RegPozApp.Migrations
                         new
                         {
                             Id = 3,
-                            Current = true,
                             IsDeleted = false,
                             Name = "Metinis rangovas",
                             QuestionId = 2
@@ -74,7 +68,6 @@ namespace RegPozApp.Migrations
                         new
                         {
                             Id = 4,
-                            Current = false,
                             IsDeleted = false,
                             Name = "Metinis subrangovas",
                             QuestionId = 2
@@ -82,7 +75,6 @@ namespace RegPozApp.Migrations
                         new
                         {
                             Id = 5,
-                            Current = false,
                             IsDeleted = false,
                             Name = "Senas rangovas",
                             QuestionId = 2
@@ -90,7 +82,6 @@ namespace RegPozApp.Migrations
                         new
                         {
                             Id = 6,
-                            Current = false,
                             IsDeleted = false,
                             Name = "Naujas rangovas",
                             QuestionId = 2
@@ -98,7 +89,6 @@ namespace RegPozApp.Migrations
                         new
                         {
                             Id = 7,
-                            Current = false,
                             IsDeleted = false,
                             Name = "Taip",
                             QuestionId = 3
@@ -106,7 +96,6 @@ namespace RegPozApp.Migrations
                         new
                         {
                             Id = 8,
-                            Current = true,
                             IsDeleted = false,
                             Name = "Ne",
                             QuestionId = 3
@@ -114,7 +103,6 @@ namespace RegPozApp.Migrations
                         new
                         {
                             Id = 9,
-                            Current = true,
                             IsDeleted = false,
                             Name = "Automatinis",
                             QuestionId = 4
@@ -122,7 +110,6 @@ namespace RegPozApp.Migrations
                         new
                         {
                             Id = 10,
-                            Current = false,
                             IsDeleted = false,
                             Name = "Rankinis",
                             QuestionId = 4
@@ -130,7 +117,6 @@ namespace RegPozApp.Migrations
                         new
                         {
                             Id = 11,
-                            Current = false,
                             IsDeleted = false,
                             Name = "Taip",
                             QuestionId = 5
@@ -138,10 +124,27 @@ namespace RegPozApp.Migrations
                         new
                         {
                             Id = 12,
-                            Current = false,
                             IsDeleted = false,
                             Name = "Ne",
                             QuestionId = 5
+                        });
+                });
+
+            modelBuilder.Entity("RegPozApp.Models.Form", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Forms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1
                         });
                 });
 
@@ -152,6 +155,12 @@ namespace RegPozApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AnswerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FormId")
+                        .HasColumnType("int");
+
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -160,36 +169,48 @@ namespace RegPozApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FormId");
+
                     b.ToTable("Questions");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            AnswerId = 1,
+                            FormId = 1,
                             IsDeleted = false,
                             Name = "Reikia atlikti rangos darbus"
                         },
                         new
                         {
                             Id = 2,
+                            AnswerId = 3,
+                            FormId = 1,
                             IsDeleted = false,
                             Name = "Rangos darbus atliks"
                         },
                         new
                         {
                             Id = 3,
+                            AnswerId = 8,
+                            FormId = 1,
                             IsDeleted = false,
                             Name = "Verslo klientas"
                         },
                         new
                         {
                             Id = 4,
+                            AnswerId = 9,
+                            FormId = 1,
                             IsDeleted = false,
                             Name = "Skaičiavimo metodas"
                         },
                         new
                         {
                             Id = 5,
+                            AnswerId = 0,
+                            FormId = 1,
                             IsDeleted = false,
                             Name = "Svarbus klientas"
                         });
@@ -204,6 +225,20 @@ namespace RegPozApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("RegPozApp.Models.Question", b =>
+                {
+                    b.HasOne("RegPozApp.Models.Form", null)
+                        .WithMany("Questions")
+                        .HasForeignKey("FormId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RegPozApp.Models.Form", b =>
+                {
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("RegPozApp.Models.Question", b =>

@@ -15,15 +15,19 @@ namespace RegPozApp.Controllers
             _questionRepository = questionRepository;
         }
         // GET: QuestionController
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var questions = _questionRepository.GetAll();
+            if (id == 0)
+            {
+
+            }
+            var questions = _questionRepository.GetAllByFormId(id);
 
             return View(questions);
         }
 
         // GET: QuestionController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult SingleForm(int id)
         {
             return View();
         }
@@ -62,10 +66,19 @@ namespace RegPozApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
 
-            return View();
+            foreach (Question question in questions)
+            {
+                var questionToUpdate = _questionRepository.Get(question.Id);
+                questionToUpdate.AnswerId = question.AnswerId;
+                _questionRepository.Update(questionToUpdate);
+            }
+
+            _questionRepository.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: QuestionController/Delete/5

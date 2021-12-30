@@ -16,5 +16,10 @@ namespace RegPozApp.Repositories
         {
             return _dbSet.Include(q => q.Answers).ToList();
         }
+
+        public List<Question> GetAllByFormId(int id)
+        {
+            return _dbSet.Include(q => q.Answers).Where(q => q.FormId == id).ToList();
+        }
     }
 }

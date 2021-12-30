@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RegPozApp.Data;
 
 namespace RegPozApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211230170924_rebuild")]
+    partial class rebuild
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,32 +130,6 @@ namespace RegPozApp.Migrations
                         });
                 });
 
-            modelBuilder.Entity("RegPozApp.Models.Form", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Forms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsDeleted = false,
-                            Name = "Form #1"
-                        });
-                });
-
             modelBuilder.Entity("RegPozApp.Models.Question", b =>
                 {
                     b.Property<int>("Id")
@@ -164,9 +140,6 @@ namespace RegPozApp.Migrations
                     b.Property<int>("AnswerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FormId")
-                        .HasColumnType("int");
-
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -175,8 +148,6 @@ namespace RegPozApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FormId");
-
                     b.ToTable("Questions");
 
                     b.HasData(
@@ -184,7 +155,6 @@ namespace RegPozApp.Migrations
                         {
                             Id = 1,
                             AnswerId = 1,
-                            FormId = 1,
                             IsDeleted = false,
                             Name = "Reikia atlikti rangos darbus"
                         },
@@ -192,7 +162,6 @@ namespace RegPozApp.Migrations
                         {
                             Id = 2,
                             AnswerId = 3,
-                            FormId = 1,
                             IsDeleted = false,
                             Name = "Rangos darbus atliks"
                         },
@@ -200,7 +169,6 @@ namespace RegPozApp.Migrations
                         {
                             Id = 3,
                             AnswerId = 8,
-                            FormId = 1,
                             IsDeleted = false,
                             Name = "Verslo klientas"
                         },
@@ -208,7 +176,6 @@ namespace RegPozApp.Migrations
                         {
                             Id = 4,
                             AnswerId = 9,
-                            FormId = 1,
                             IsDeleted = false,
                             Name = "Skaičiavimo metodas"
                         },
@@ -216,7 +183,6 @@ namespace RegPozApp.Migrations
                         {
                             Id = 5,
                             AnswerId = 0,
-                            FormId = 1,
                             IsDeleted = false,
                             Name = "Svarbus klientas"
                         });
@@ -231,20 +197,6 @@ namespace RegPozApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Question");
-                });
-
-            modelBuilder.Entity("RegPozApp.Models.Question", b =>
-                {
-                    b.HasOne("RegPozApp.Models.Form", null)
-                        .WithMany("Questions")
-                        .HasForeignKey("FormId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("RegPozApp.Models.Form", b =>
-                {
-                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("RegPozApp.Models.Question", b =>

@@ -31,6 +31,7 @@ namespace RegPozApp
             services.AddDbContext<DataContext>(conn => conn.UseSqlServer(connString));
             services.AddTransient<QuestionRepository>();
             services.AddTransient<AnswerRepository>();
+            services.AddTransient<FormRepository>();
             services.AddControllersWithViews();
         }
 
