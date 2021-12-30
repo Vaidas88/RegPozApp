@@ -9,37 +9,37 @@ namespace RegPozApp.Data
         {
         }
 
-        public DbSet<Feature> Features { get; set; }
-        public DbSet<Value> Values { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Feature>().HasData(
-                new Feature()
+            modelBuilder.Entity<Question>().HasData(
+                new Question()
                 {
                     Id = 1,
                     Name = "Reikia atlikti rangos darbus",
                     IsDeleted = false
                 },
-                new Feature()
+                new Question()
                 {
                     Id = 2,
                     Name = "Rangos darbus atliks",
                     IsDeleted = false
                 },
-                new Feature()
+                new Question()
                 {
                     Id = 3,
                     Name = "Verslo klientas",
                     IsDeleted = false
                 },
-                new Feature()
+                new Question()
                 {
                     Id = 4,
                     Name = "Skaičiavimo metodas",
                     IsDeleted = false
                 },
-                new Feature()
+                new Question()
                 {
                     Id = 5,
                     Name = "Svarbus klientas",
@@ -47,100 +47,100 @@ namespace RegPozApp.Data
                 }
             );
 
-            modelBuilder.Entity<Value>().HasData(
-                new Value()
+            modelBuilder.Entity<Answer>().HasData(
+                new Answer()
                 {
                     Id = 1,
                     Name = "Taip",
-                    FeatureId = 1,
+                    QuestionId = 1,
                     Current = true,
                     IsDeleted = false
                 },
-                new Value()
+                new Answer()
                 {
                     Id = 2,
                     Name = "Ne",
-                    FeatureId = 1,
+                    QuestionId = 1,
                     Current = false,
                     IsDeleted = false
                 },
-                new Value()
+                new Answer()
                 {
                     Id = 3,
                     Name = "Metinis rangovas",
-                    FeatureId = 2,
+                    QuestionId = 2,
                     Current = true,
                     IsDeleted = false
                 },
-                new Value()
+                new Answer()
                 {
                     Id = 4,
                     Name = "Metinis subrangovas",
-                    FeatureId = 2,
+                    QuestionId = 2,
                     Current = false,
                     IsDeleted = false
                 },
-                new Value()
+                new Answer()
                 {
                     Id = 5,
                     Name = "Senas rangovas",
-                    FeatureId = 2,
+                    QuestionId = 2,
                     Current = false,
                     IsDeleted = false
                 },
-                new Value()
+                new Answer()
                 {
                     Id = 6,
                     Name = "Naujas rangovas",
-                    FeatureId = 2,
+                    QuestionId = 2,
                     Current = false,
                     IsDeleted = false
                 },
-                new Value()
+                new Answer()
                 {
                     Id = 7,
                     Name = "Taip",
-                    FeatureId = 3,
+                    QuestionId = 3,
                     Current = false,
                     IsDeleted = false
                 },
-                new Value()
+                new Answer()
                 {
                     Id = 8,
                     Name = "Ne",
-                    FeatureId = 3,
+                    QuestionId = 3,
                     Current = true,
                     IsDeleted = false
                 },
-                new Value()
+                new Answer()
                 {
                     Id = 9,
                     Name = "Automatinis",
-                    FeatureId = 4,
+                    QuestionId = 4,
                     Current = true,
                     IsDeleted = false
                 },
-                new Value()
+                new Answer()
                 {
                     Id = 10,
                     Name = "Rankinis",
-                    FeatureId = 4,
+                    QuestionId = 4,
                     Current = false,
                     IsDeleted = false
                 },
-                new Value()
+                new Answer()
                 {
                     Id = 11,
                     Name = "Taip",
-                    FeatureId = 5,
+                    QuestionId = 5,
                     Current = false,
                     IsDeleted = false
                 },
-                new Value()
+                new Answer()
                 {
                     Id = 12,
                     Name = "Ne",
-                    FeatureId = 5,
+                    QuestionId = 5,
                     Current = false,
                     IsDeleted = false
                 }

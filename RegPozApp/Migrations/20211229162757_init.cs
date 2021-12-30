@@ -7,7 +7,7 @@ namespace RegPozApp.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Features",
+                name: "Questions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -17,32 +17,33 @@ namespace RegPozApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Features", x => x.Id);
+                    table.PrimaryKey("PK_Questions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Values",
+                name: "Answers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FeatureId1 = table.Column<int>(type: "int", nullable: true),
+                    QuestionId = table.Column<int>(type: "int", nullable: false),
+                    Current = table.Column<bool>(type: "bit", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Values", x => x.Id);
+                    table.PrimaryKey("PK_Answers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Values_Features_FeatureId1",
-                        column: x => x.FeatureId1,
-                        principalTable: "Features",
+                        name: "FK_Answers_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Features",
+                table: "Questions",
                 columns: new[] { "Id", "IsDeleted", "Name" },
                 values: new object[,]
                 {
@@ -54,37 +55,37 @@ namespace RegPozApp.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Values",
-                columns: new[] { "Id", "FeatureId1", "IsDeleted", "Name" },
+                table: "Answers",
+                columns: new[] { "Id", "Current", "IsDeleted", "Name", "QuestionId" },
                 values: new object[,]
                 {
-                    { 10, null, false, "Rankinis" },
-                    { 9, null, false, "Automatinis" },
-                    { 8, null, false, "Ne" },
-                    { 7, null, false, "Taip" },
-                    { 6, null, false, "Naujas rangovas" },
-                    { 4, null, false, "Metinis subrangovas" },
-                    { 11, null, false, "Taip" },
-                    { 3, null, false, "Metinis rangovas" },
-                    { 2, null, false, "Ne" },
-                    { 1, null, false, "Taip" },
-                    { 5, null, false, "Senas rangovas" },
-                    { 12, null, false, "Ne" }
+                    { 1, true, false, "Taip", 1 },
+                    { 2, false, false, "Ne", 1 },
+                    { 3, true, false, "Metinis rangovas", 2 },
+                    { 4, false, false, "Metinis subrangovas", 2 },
+                    { 5, false, false, "Senas rangovas", 2 },
+                    { 6, false, false, "Naujas rangovas", 2 },
+                    { 7, false, false, "Taip", 3 },
+                    { 8, true, false, "Ne", 3 },
+                    { 9, true, false, "Automatinis", 4 },
+                    { 10, false, false, "Rankinis", 4 },
+                    { 11, false, false, "Taip", 5 },
+                    { 12, false, false, "Ne", 5 }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Values_FeatureId1",
-                table: "Values",
-                column: "FeatureId1");
+                name: "IX_Answers_QuestionId",
+                table: "Answers",
+                column: "QuestionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Values");
+                name: "Answers");
 
             migrationBuilder.DropTable(
-                name: "Features");
+                name: "Questions");
         }
     }
 }

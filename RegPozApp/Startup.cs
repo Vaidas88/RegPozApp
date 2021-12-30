@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RegPozApp.Data;
+using RegPozApp.Models;
+using RegPozApp.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,8 @@ namespace RegPozApp
         {
             var connString = Configuration.GetConnectionString("Default");
             services.AddDbContext<DataContext>(conn => conn.UseSqlServer(connString));
+            services.AddTransient<QuestionRepository>();
+            services.AddTransient<AnswerRepository>();
             services.AddControllersWithViews();
         }
 
